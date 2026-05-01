@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Taquería El Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100 h-screen flex flex-col">
+    <!-- MODAL: Pregunta Aquí o Llevar -->
+    <div id="modalTipo" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+        <div class="bg-white p-6 rounded-2xl max-w-sm w-11/12 text-center shadow-2xl">
+            <h2 class="text-2xl font-bold mb-2 text-gray-800">¡Bienvenido!</h2>
+            <p class="text-gray-600 mb-6">¿Tu pedido es para...?</p>
+            <div class="space-y-3">
+                <button id="btnAqui" class="w-full bg-red-600 text-white p-4 rounded-xl font-bold text-lg hover:bg-red-700">
+                    <i class="fas fa-utensils"></i> Comer aquí
+                </button>
+                <button id="btnLlevar" class="w-full bg-orange-500 text-white p-4 rounded-xl font-bold text-lg hover:bg-orange-600">
+                    <i class="fas fa-shopping-bag"></i> Para llevar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Confirmación -->
+    <div id="modalConfirmacion" class="fixed inset-0 bg-black bg-opacity-70 items-center justify-center z-50 hidden">
+        <div class="bg-white p-6 rounded-2xl max-w-sm w-11/12 text-center shadow-2xl">
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-red-600 text-white p-4 text-center shadow-lg flex-shrink-0">
+        <h1 class="text-2xl font-bold"><i class="fas fa-pepper-hot"></i> Taquería El Demo</h1>
+        <p id="tipoPedido" class="text-sm bg-white bg-opacity-20 rounded-full px-3 py-1 inline-block mt-1"></p>
+    </header>
+
+    <!-- Buscador -->
+    <div class="bg-gray-100 p-3 shadow-sm flex-shrink-0">
+        <div class="relative">
+            <input type="text" id="buscador" placeholder="Buscar tacos, tortas, bebidas..." 
+                   class="w-full p-3 pl-10 pr-10 border rounded-lg shadow-sm">
+            <i class="fas fa-search absolute left-3 top-4 text-gray-400"></i>
+            <button id="btnLimpiar" class="absolute right-3 top-3 text-gray-400 hover:text-red-600 hidden">
+                <i class="fas fa-times-circle text-xl"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Aviso Mesa -->
+    <div id="avisoMesa" class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-3 text-sm hidden mx-3 rounded flex-shrink-0">
+        <i class="fas fa-exclamation-triangle"></i> <strong>Importante:</strong> Para comer aquí debes tener mesa asignada. Si no tienes, pide una al mesero antes de ordenar.
+    </div>
+
+    <!-- Menú -->
+    <div class="flex-1 overflow-y-auto p-4" id="menu-container"></div>
+
+    <!-- Sin resultados -->
+    <div id="sinResultados" class="text-center text-gray-500 py-10 hidden">
+        <i class="fas fa-search text-4xl mb-3"></i>
+        <p>No encontramos ese producto</p>
+    </div>
+
+    <!-- Carrito -->
+    <div id="carrito" class="bg-white shadow-2xl border-t-4 border-red-600 hidden flex-shrink-0">
+        <div class="p-4">
+            <div class="flex justify-between items-center mb-3">
+                <h3 class="font-bold text-lg">Tu pedido:</h3>
+                <span id="total" class="font-bold text-xl text-green-600">$0</span>
+            </div>
+            <div id="lista-carrito" class="text-sm mb-3 max-h-28 overflow-y-auto"></div>
+            
+            <div id="campoMesa" class="hidden">
+                <input type="number" id="mesa" placeholder="Número de mesa *" class="w-full p-3 border rounded-lg mb-3">
+            </div>
+            <div id="campoNombre" class="hidden">
+                <input type="text" id="nombreCliente" placeholder="Tu nombre *" class="w-full p-3 border rounded-lg mb-3">
+            </div>
+            
+            <button id="btnEnviar" class="w-full bg-green-500 text-white p-4 rounded-lg font-bold text-lg hover:bg-green-600">
+                <i class="fab fa-whatsapp"></i> Enviar pedido por WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+.platillo-card {
+    transition: transform 0.2s;
+}
+.platillo-card:active {
+    transform: scale(0.98);
+}
+#lista-carrito::-webkit-scrollbar {
+    width: 5px;
+}
+#lista-carrito::-webkit-scrollbar-thumb {
+    background: #dc2626;
+    border-radius: 10px;
+}
+#modalTipo, #modalConfirmacion {
+    animation: fadeIn 0.3s;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+html, body {
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+}
+#menu-container {
+    -webkit-overflow-scrolling: touch;
+}
