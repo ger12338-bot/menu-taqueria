@@ -1,11 +1,11 @@
 // 1. CAMBIA ESTO: Tu número de WhatsApp con 52 + lada + número
-const NUMERO_TAQUERIA = "8125198131"; 
+const NUMERO_TAQUERIA = "8129411481"; 
 
 // 2. CAMBIA ESTO: El menú de tu cliente
 const menu = [
-    { id: 1, nombre: "Taco de Bistec", precio: 25, categoria: "Tacos", img: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=300" },
-    { id: 2, nombre: "Taco de Pastor", precio: 25, categoria: "Tacos", img: "https://images.unsplash.com/photo-1613514785940-daed07799d9b?w=300" },
-    { id: 3, nombre: "Gringa", precio: 45, categoria: "Especiales", img: "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?w=300" },
+    { id: 1, nombre: "Orden de Taco de Bistec", precio: 65, categoria: "Tacos", img: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=300" },
+    { id: 2, nombre: "Orden de Taco de Pastor", precio: 65, categoria: "Tacos", img: "https://images.unsplash.com/photo-1613514785940-daed07799d9b?w=300" },
+    { id: 3, nombre: "Gringa de Pasto", precio: 80, categoria: "Especiales", img: "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?w=300" },
     { id: 4, nombre: "Torta de Pierna", precio: 55, categoria: "Tortas", img: "https://images.unsplash.com/photo-1627907228177-3a73b8e3f74d?w=300" },
     { id: 5, nombre: "Quesadilla", precio: 30, categoria: "Especiales", img: "https://images.unsplash.com/photo-1618040996337-56904b7850b9?w=300" },
     { id: 6, nombre: "Coca Cola 600ml", precio: 20, categoria: "Bebidas", img: "https://images.unsplash.com/photo-1581636625402-29b2a704ef13?w=300" },
