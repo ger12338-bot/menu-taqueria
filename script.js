@@ -1,5 +1,5 @@
 // 1. CAMBIA ESTO: Tu número de WhatsApp con 52 + lada + número
-const NUMERO_TAQUERIA = "8125198131"; 
+const NUMERO_TAQUERIA = "8131151055"; 
 
 // 2. CAMBIA ESTO: El menú de tu cliente
 const menu = [
