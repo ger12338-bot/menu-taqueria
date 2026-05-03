@@ -1,7 +1,7 @@
 /* Fondo con patrón dorado sutil */
 body {
     background-color: #1f2937;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23fbbf24' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23fbbf24' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     overscroll-behavior: none;
     -webkit-overflow-scrolling: touch;
 }
@@ -12,6 +12,8 @@ body {
     box-shadow: 0 4px 6px -1px rgba(251, 191, 36, 0.1);
     background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
     border: 1px solid rgba(251, 191, 36, 0.2);
+    position: relative;
+    overflow: hidden;
 }
 .platillo-card:hover {
     transform: translateY(-3px);
@@ -20,6 +22,171 @@ body {
 }
 .platillo-card:active {
     transform: scale(0.98);
+}
+
+/* === ANIMACIÓN 1: RIPPLE EFFECT EN BOTONES === */
+.ripple-btn {
+    position: relative;
+    overflow: hidden;
+}
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(251, 191, 36, 0.6);
+    transform: scale(0);
+    animation: rippleEffect 0.6s linear;
+    pointer-events: none;
+}
+@keyframes rippleEffect {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* === ANIMACIÓN 2: SKELETON LOADING === */
+@keyframes skeletonLoading {
+    0% { background-position: -200px 0; }
+    100% { background-position: calc(200px + 100%) 0; }
+}
+.skeleton {
+    background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+    background-size: 200px 100%;
+    animation: skeletonLoading 1.5s infinite;
+}
+.platillo-card.loading {
+    pointer-events: none;
+}
+.platillo-card.loading img,
+.platillo-card.loading h3,
+.platillo-card.loading p {
+    background: #374151;
+    color: transparent;
+    border-radius: 4px;
+}
+
+/* === ANIMACIÓN 3: FLY TO CART === */
+@keyframes flyToCart {
+    0% {
+        opacity: 1;
+        transform: scale(1) translate(0, 0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.3) translate(var(--fly-x), var(--fly-y));
+    }
+}
+.fly-item {
+    position: fixed;
+    z-index: 9999;
+    pointer-events: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    border: 3px solid #fbbf24;
+    animation: flyToCart 0.8s cubic-bezier(0.5, 0, 1, 1) forwards;
+}
+
+/* === ANIMACIÓN 4: BADGE +1 === */
+@keyframes badgeFloat {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(0);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(-40px) scale(1.3);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-80px) scale(0.8);
+    }
+}
+.badge-plus {
+    position: fixed;
+    background: #fbbf24;
+    color: #111827;
+    font-weight: bold;
+    font-size: 1.2rem;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    pointer-events: none;
+    box-shadow: 0 4px 10px rgba(251, 191, 36, 0.5);
+    animation: badgeFloat 1s ease-out forwards;
+}
+
+/* === ANIMACIÓN 5: CONFETTI DORADO === */
+@keyframes confettiFall {
+    0% {
+        transform: translateY(0) rotateZ(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotateZ(720deg);
+        opacity: 0;
+    }
+}
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: #fbbf24;
+    top: -10px;
+    z-index: 9998;
+    pointer-events: none;
+    animation: confettiFall 3s linear forwards;
+}
+.confetti.square { border-radius: 2px; }
+.confetti.circle { border-radius: 50%; }
+
+/* ANIMACIÓN: Cuando agregas al carrito */
+@keyframes agregarBounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); background: #fbbf24; }
+    100% { transform: scale(1); }
+}
+.platillo-card.agregado {
+    animation: agregarBounce 0.4s ease;
+}
+
+/* ANIMACIÓN: El carrito rebota */
+@keyframes carritoShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+#carrito.pulse {
+    animation: carritoShake 0.5s ease;
+}
+
+/* ANIMACIÓN: Total brilla */
+@keyframes totalGlow {
+    0% { text-shadow: 0 0 5px #fbbf24; }
+    50% { text-shadow: 0 0 20px #fbbf24, 0 0 30px #fbbf24; }
+    100% { text-shadow: 0 0 5px #fbbf24; }
+}
+#total.brilla {
+    animation: totalGlow 0.6s ease;
+}
+
+/* ANIMACIÓN: Items aparecen */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.platillo-card {
+    animation: slideInUp 0.4s ease backwards;
 }
 
 /* Scrollbar dorada */
@@ -34,7 +201,7 @@ body {
     background: #1f2937;
 }
 
-/* Animaciones */
+/* Animaciones modales */
 #modalTipo, #modalConfirmacion {
     animation: fadeIn 0.4s;
 }
@@ -58,9 +225,43 @@ body {
 /* Items del carrito */
 #lista-carrito > div {
     border-color: rgba(251, 191, 36, 0.2) !important;
+    animation: slideInUp 0.3s ease;
+}
+
+/* Botón agregar con efecto */
+.platillo-card button {
+    transition: all 0.2s ease;
+}
+.platillo-card button:active {
+    transform: scale(0.9);
 }
 
 html, body {
     overscroll-behavior: none;
     -webkit-overflow-scrolling: touch;
+}
+
+/* Check flotante anterior */
+@keyframes checkFloat {
+    0% { 
+        opacity: 1; 
+        transform: translateY(0) scale(0); 
+    }
+    50% { 
+        opacity: 1; 
+        transform: translateY(-30px) scale(1.2); 
+    }
+    100% { 
+        opacity: 0; 
+        transform: translateY(-60px) scale(0.8); 
+    }
+}
+.check-flotante {
+    position: fixed;
+    color: #fbbf24;
+    font-size: 2rem;
+    font-weight: bold;
+    pointer-events: none;
+    z-index: 9999;
+    animation: checkFloat 0.8s ease forwards;
 }
