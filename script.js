@@ -20,12 +20,18 @@ let ultimoCodigoPedido = localStorage.getItem('ultimoCodigo') || null;
 let esAdicional = false;
 
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('btnAqui').addEventListener('click', () => seleccionarTipo('aqui'));
-    document.getElementById('btnLlevar').addEventListener('click', () => seleccionarTipo('llevar'));
-    document.getElementById('btnEnviar').addEventListener('click', enviarWhatsApp);
-    document.getElementById('buscador').addEventListener('input', filtrarMenu);
-    document.getElementById('btnLimpiar').addEventListener('click', limpiarBuscador);
-    renderizarMenu();
+    // NO RIPPLE EN MODAL - Solo en botones después
+    document.getElementById('btnAqui').onclick = () => seleccionarTipo('aqui');
+    document.getElementById('btnLlevar').onclick = () => seleccionarTipo('llevar');
+    document.getElementById('btnEnviar').onclick = enviarWhatsApp;
+    document.getElementById('buscador').oninput = filtrarMenu;
+    document.getElementById('btnLimpiar').onclick = limpiarBuscador;
+    
+    // SKELETON LOADING
+    mostrarSkeleton();
+    setTimeout(() => {
+        renderizarMenu();
+    }, 800);
 });
 
 function seleccionarTipo(tipo) {
@@ -51,6 +57,23 @@ function seleccionarTipo(tipo) {
     
     if (esAdicional && ultimoCodigoPedido) {
         tipoTexto.innerHTML += ` <span class="bg-blue-600 px-2 py-1 rounded text-xs ml-1 text-white">Adicional #${ultimoCodigoPedido}</span>`;
+    }
+}
+
+// SKELETON LOADING
+function mostrarSkeleton() {
+    const container = document.getElementById('menu-container');
+    container.innerHTML = '';
+    for (let i = 0; i < 4; i++) {
+        container.innerHTML += `
+        <div class="platillo-card loading p-3 rounded-lg shadow mb-3 flex gap-3">
+            <div class="skeleton w-20 h-20 rounded-lg"></div>
+            <div class="flex-1">
+                <div class="skeleton h-5 w-3/4 mb-2 rounded"></div>
+                <div class="skeleton h-4 w-1/4 rounded"></div>
+            </div>
+            <div class="skeleton w-20 h-10 rounded-lg"></div>
+        </div>`;
     }
 }
 
@@ -98,15 +121,15 @@ function renderizarMenu() {
     
     categorias.forEach(cat => {
         container.innerHTML += `<h2 class="text-xl font-bold mt-6 mb-3">${cat}</h2>`;
-        menuFiltrado.filter(item => item.categoria === cat).forEach(platillo => {
+        menuFiltrado.filter(item => item.categoria === cat).forEach((platillo) => {
             container.innerHTML += `
-            <div class="platillo-card p-3 rounded-lg shadow mb-3 flex gap-3">
+            <div class="platillo-card p-3 rounded-lg shadow mb-3 flex gap-3" data-id="${platillo.id}">
                 <img src="${platillo.img}" alt="${platillo.nombre}" class="w-20 h-20 object-cover rounded-lg border-2 border-yellow-400">
                 <div class="flex-1">
                     <h3 class="font-bold text-white">${platillo.nombre}</h3>
                     <p class="text-yellow-400 font-bold text-lg">$${platillo.precio}</p>
                 </div>
-                <button onclick="agregarCarrito(${platillo.id})" class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-gray-900 px-4 rounded-lg font-bold hover:from-yellow-600 hover:to-yellow-700 shadow-lg">
+                <button onclick="agregarCarrito(${platillo.id}, event)" class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-gray-900 px-4 rounded-lg font-bold hover:from-yellow-600 hover:to-yellow-700 shadow-lg">
                     + Agregar
                 </button>
             </div>`;
@@ -114,7 +137,8 @@ function renderizarMenu() {
     });
 }
 
-function agregarCarrito(id) {
+// FLY TO CART + BADGE +1
+function agregarCarrito(id, event) {
     const platillo = menu.find(p => p.id === id);
     const existe = carrito.find(p => p.id === id);
     if (existe) {
@@ -122,6 +146,50 @@ function agregarCarrito(id) {
     } else {
         carrito.push({...platillo, cantidad: 1});
     }
+    
+    const card = event.target.closest('.platillo-card');
+    const img = card.querySelector('img');
+    const carritoEl = document.getElementById('carrito');
+    
+    // FLY TO CART
+    const flyItem = img.cloneNode();
+    const imgRect = img.getBoundingClientRect();
+    const carritoRect = carritoEl.getBoundingClientRect();
+    
+    flyItem.classList.add('fly-item');
+    flyItem.style.left = imgRect.left + 'px';
+    flyItem.style.top = imgRect.top + 'px';
+    flyItem.style.setProperty('--fly-x', (carritoRect.left - imgRect.left) + 'px');
+    flyItem.style.setProperty('--fly-y', (carritoRect.top - imgRect.top) + 'px');
+    document.body.appendChild(flyItem);
+    setTimeout(() => flyItem.remove(), 800);
+    
+    // BADGE +1
+    const badge = document.createElement('div');
+    badge.className = 'badge-plus';
+    badge.textContent = '+1';
+    badge.style.left = event.clientX + 'px';
+    badge.style.top = event.clientY + 'px';
+    document.body.appendChild(badge);
+    setTimeout(() => badge.remove(), 1000);
+    
+    // Animación bounce
+    card.classList.add('agregado');
+    setTimeout(() => card.classList.remove('agregado'), 400);
+    
+    // Check flotante
+    const check = document.createElement('div');
+    check.className = 'check-flotante';
+    check.innerHTML = '<i class="fas fa-check-circle"></i>';
+    check.style.left = event.clientX + 'px';
+    check.style.top = event.clientY + 'px';
+    document.body.appendChild(check);
+    setTimeout(() => check.remove(), 800);
+    
+    // Carrito tiembla
+    carritoEl.classList.add('pulse');
+    setTimeout(() => carritoEl.classList.remove('pulse'), 500);
+    
     actualizarCarrito();
 }
 
@@ -158,6 +226,8 @@ function actualizarCarrito() {
         </div>`;
     });
     
+    totalEl.classList.add('brilla');
+    setTimeout(() => totalEl.classList.remove('brilla'), 600);
     totalEl.textContent = `$${total}`;
 }
 
@@ -180,6 +250,23 @@ function generarCodigoPedido() {
     if (contador > 999) contador = 100;
     localStorage.setItem('contadorPedidos', contador);
     return String(contador);
+}
+
+// CONFETTI DORADO
+function lanzarConfetti() {
+    const colores = ['#fbbf24', '#f59e0b', '#d97706'];
+    for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+            const confetti = document.createElement('div');
+            confetti.className = `confetti ${Math.random() > 0.5 ? 'square' : 'circle'}`;
+            confetti.style.left = Math.random() * 100 + '%';
+            confetti.style.background = colores[Math.floor(Math.random() * colores.length)];
+            confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            confetti.style.animationDelay = Math.random() * 0.5 + 's';
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 4000);
+        }, i * 30);
+    }
 }
 
 function enviarWhatsApp() {
@@ -260,6 +347,9 @@ function enviarWhatsApp() {
     
     window.open(url, '_blank');
     
+    // CONFETTI al enviar
+    lanzarConfetti();
+    
     if (!esAdicional) {
         ultimoCodigoPedido = codigoPedido;
         localStorage.setItem('ultimoCodigo', codigoPedido);
@@ -297,9 +387,9 @@ function mostrarModalConfirmacion(codigo) {
         </button>
     `;
     
-    document.getElementById('btnAdicional').addEventListener('click', agregarAdicional);
-    document.getElementById('btnCambiar').addEventListener('click', () => chatearCambio(codigo));
-    document.getElementById('btnCerrar').addEventListener('click', cerrarConfirmacion);
+    document.getElementById('btnAdicional').onclick = agregarAdicional;
+    document.getElementById('btnCambiar').onclick = () => chatearCambio(codigo);
+    document.getElementById('btnCerrar').onclick = cerrarConfirmacion;
     
     modal.classList.remove('hidden');
     modal.classList.add('flex');
