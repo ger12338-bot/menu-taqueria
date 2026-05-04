@@ -4,7 +4,7 @@ const NUMERO_TAQUERIA = "8131151055";
 // 2. CAMBIA ESTO: El menú de tu cliente
 const menu = [
     { id: 1, nombre: "Orden de Tacos de Bistec", precio: 80, categoria: "Tacos", img: "./img/Tacos-bistec.jpg" },
-    { id: 2, nombre: "Orden de Tacos de Pastor", precio: 80, categoria: "Tacos", img: "https://images.unsplash.com/photo-1613514785940-daed07799d9b?w=300" },
+    { id: 2, nombre: "Orden de Tacos de Pastor", precio: 80, categoria: "Tacos", img: "./img/Tacos-pastor.jpg" },
     { id: 3, nombre: "Gringa de Pastor", precio: 65, categoria: "Especiales", img: "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?w=300" },
     { id: 4, nombre: "Torta de Pierna", precio: 55, categoria: "Tortas", img: "https://images.unsplash.com/photo-1627907228177-3a73b8e3f74d?w=300" },
     { id: 5, nombre: "Quesadilla de Pastor", precio: 45, categoria: "Especiales", img: "https://images.unsplash.com/photo-1618040996337-56904b7850b9?w=300" },
