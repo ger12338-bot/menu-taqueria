@@ -3,14 +3,14 @@ const NUMERO_TAQUERIA = "8131151055";
 
 // 2. CAMBIA ESTO: El menú de tu cliente
 const menu = [
-    { id: 1, nombre: "Taco de Bistec", precio: 25, categoria: "Tacos", img: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=300" },
-    { id: 2, nombre: "Taco de Pastor", precio: 25, categoria: "Tacos", img: "https://images.unsplash.com/photo-1613514785940-daed07799d9b?w=300" },
-    { id: 3, nombre: "Gringa", precio: 45, categoria: "Especiales", img: "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?w=300" },
+    { id: 1, nombre: "Orden de Tacos de Bistec", precio: 80, categoria: "Tacos", img: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=300" },
+    { id: 2, nombre: "Orden de Tacos de Pastor", precio: 80, categoria: "Tacos", img: "https://images.unsplash.com/photo-1613514785940-daed07799d9b?w=300" },
+    { id: 3, nombre: "Gringa de Pastor", precio: 65, categoria: "Especiales", img: "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?w=300" },
     { id: 4, nombre: "Torta de Pierna", precio: 55, categoria: "Tortas", img: "https://images.unsplash.com/photo-1627907228177-3a73b8e3f74d?w=300" },
-    { id: 5, nombre: "Quesadilla", precio: 30, categoria: "Especiales", img: "https://images.unsplash.com/photo-1618040996337-56904b7850b9?w=300" },
+    { id: 5, nombre: "Quesadilla de Pastor", precio: 45, categoria: "Especiales", img: "https://images.unsplash.com/photo-1618040996337-56904b7850b9?w=300" },
     { id: 6, nombre: "Coca Cola 600ml", precio: 20, categoria: "Bebidas", img: "https://images.unsplash.com/photo-1581636625402-29b2a704ef13?w=300" },
-    { id: 7, nombre: "Agua de Horchata", precio: 25, categoria: "Bebidas", img: "https://images.unsplash.com/photo-1544145945-f90425340c80?w=300" },
-    { id: 8, nombre: "Agua de Jamaica", precio: 25, categoria: "Bebidas", img: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=300" },
+    { id: 7, nombre: "Agua de Horchata", precio: 30, categoria: "Bebidas", img: "https://images.unsplash.com/photo-1544145945-f90425340c80?w=300" },
+    { id: 8, nombre: "Agua de Jamaica", precio: 30, categoria: "Bebidas", img: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=300" },
 ];
 
 let carrito = [];
